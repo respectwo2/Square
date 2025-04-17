@@ -1,8 +1,4 @@
 <div align="center">
-<<<<<<< HEAD
-
-=======
->>>>>>> ead2a224 (Update README.md)
   <img src="https://github.com/user-attachments/assets/c48742c6-cdad-40e6-a9c1-3fbbfbe9f3ab" alt="네모투명배경" width="30%" />
   <img src="https://github.com/user-attachments/assets/1c48ea29-8347-4e56-aefc-046b670cecdb" alt="네모흰색배경" width="30%" />
 </div>
@@ -64,18 +60,6 @@ SNS에서 벌어지는 생산적인 토론이나 논쟁,
 ## 🧩 시스템 아키텍처
 ![시스템아키텍쳐](https://github.com/user-attachments/assets/c832a5ef-a076-4a49-8d66-3f966c34d588)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-![시스템아키텍쳐](https://github.com/user-attachments/assets/119cc67e-3dd1-4578-91f6-32892d2f081c)
->>>>>>> 2ca343bf (Update README.md)
-=======
-![시스템아키텍쳐](https://github.com/user-attachments/assets/b32f83f1-0399-42c6-9b39-dfcb80dc1cd1)
->>>>>>> 12017a19 (Update README.md)
-=======
-![시스템아키텍쳐](https://github.com/user-attachments/assets/c832a5ef-a076-4a49-8d66-3f966c34d588)
->>>>>>> d5046c54 (Update README.md)
 <br>
 <br>
 
