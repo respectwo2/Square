@@ -7,13 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.shax3.square.common.model.TargetType;
 import org.shax3.square.domain.debate.model.Debate;
 import org.shax3.square.domain.debate.service.DebateService;
-import org.shax3.square.domain.like.service.LikeService;
 import org.shax3.square.domain.opinion.dto.request.CreateOpinionRequest;
 import org.shax3.square.domain.opinion.dto.request.UpdateOpinionRequest;
-import org.shax3.square.domain.opinion.dto.response.MyOpinionResponse;
 import org.shax3.square.domain.opinion.model.Opinion;
 import org.shax3.square.domain.opinion.repository.OpinionRepository;
 import org.shax3.square.domain.user.model.Type;
@@ -23,10 +20,8 @@ import org.shax3.square.exception.ExceptionCode;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -69,11 +64,10 @@ class OpinionServiceTest {
         // Given
         CreateOpinionRequest request = new CreateOpinionRequest(1L, true, "Sample Opinion");
         // When
-        opinionService.createOpinion(mockUser, request,mockDebate);
+        opinionService.createOpinion(mockUser, request, mockDebate);
         // Then
         verify(opinionRepository, times(1)).save(any(Opinion.class));
     }
-
 
 
     @Test
@@ -213,8 +207,8 @@ class OpinionServiceTest {
         // given
         Long opinionId = 1L;
         Opinion opinion = Opinion.builder()
-            .content("test")
-            .build();
+                .content("test")
+                .build();
         ReflectionTestUtils.setField(opinion, "id", opinionId);
 
         when(opinionRepository.findById(opinionId)).thenReturn(Optional.of(opinion));
@@ -236,8 +230,8 @@ class OpinionServiceTest {
 
         // when & then
         assertThatThrownBy(() -> opinionService.getOpinion(opinionId))
-            .isInstanceOf(CustomException.class)
-            .hasMessage(ExceptionCode.OPINION_NOT_FOUND.getMessage());
+                .isInstanceOf(CustomException.class)
+                .hasMessage(ExceptionCode.OPINION_NOT_FOUND.getMessage());
     }
 
     @Test
@@ -249,7 +243,7 @@ class OpinionServiceTest {
 
         // when & then
         assertThatCode(() -> opinionService.validateExists(opinionId))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @Test
@@ -261,8 +255,8 @@ class OpinionServiceTest {
 
         // when & then
         assertThatThrownBy(() -> opinionService.validateExists(opinionId))
-            .isInstanceOf(CustomException.class)
-            .hasMessage(ExceptionCode.OPINION_NOT_FOUND.getMessage());
+                .isInstanceOf(CustomException.class)
+                .hasMessage(ExceptionCode.OPINION_NOT_FOUND.getMessage());
     }
 
     @Test
@@ -288,7 +282,7 @@ class OpinionServiceTest {
 
         List<Opinion> mockOpinions = createTestOpinions(5L, 4L, 3L, 2L); // 총 4개
         when(opinionRepository.findMyOpinions(mockUser, nextCursorId, limit + 1))
-            .thenReturn(mockOpinions);
+                .thenReturn(mockOpinions);
 
         // When
         List<Opinion> result = opinionService.getMyOpinions(mockUser, nextCursorId, limit);
@@ -308,7 +302,7 @@ class OpinionServiceTest {
 
         List<Opinion> mockOpinions = createTestOpinions(2L, 1L);
         when(opinionRepository.findMyOpinions(mockUser, nextCursorId, limit + 1))
-            .thenReturn(mockOpinions);
+                .thenReturn(mockOpinions);
 
         // When
         List<Opinion> result = opinionService.getMyOpinions(mockUser, nextCursorId, limit);
@@ -325,10 +319,10 @@ class OpinionServiceTest {
 
         for (Long id : ids) {
             Opinion opinion = Opinion.builder()
-                .user(mockUser)
-                .debate(mockDebate)
-                .content("테스트 내용 " + id)
-                .build();
+                    .user(mockUser)
+                    .debate(mockDebate)
+                    .content("테스트 내용 " + id)
+                    .build();
             ReflectionTestUtils.setField(opinion, "id", id);
             ReflectionTestUtils.setField(opinion, "valid", true);
             opinions.add(opinion);

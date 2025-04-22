@@ -22,7 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class NotificationService {
 
-	private final NotificationRepository notificationRepository;
+    private final NotificationRepository notificationRepository;
     private final FcmService fcmService;
     private final UserDeviceService userDeviceService;
     private final UserService userService;
@@ -53,9 +53,8 @@ public class NotificationService {
         }
 
 
-
         for (String token : tokens) {
-            fcmService.sendPush(token, title, message,data);
+            fcmService.sendPush(token, title, message, data);
         }
     }
 

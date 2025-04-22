@@ -48,9 +48,9 @@ public class OpinionFacadeService {
         User opinionAuthor = opinion.getUser();
         if (!opinionAuthor.getId().equals(user.getId())) {
             eventPublisher.publishEvent(new DebateCommentCreatedEvent(
-                opinionAuthor,
-                newComment.getContent(),
-                opinion.getId()
+                    opinionAuthor,
+                    newComment.getContent(),
+                    opinion.getId()
             ));
         }
 
@@ -79,13 +79,13 @@ public class OpinionFacadeService {
         Set<Long> likedCommentIds = likeService.getLikedTargetIds(user, TargetType.OPINION_COMMENT, commentIds);
 
         List<CommentResponse> commentResponses = comments.stream()
-            .map(comment -> CommentResponse.of(
-                comment,
-                s3Service.generatePresignedGetUrl(comment.getUser().getS3Key()),
-                likedCommentIds.contains(comment.getId()),
-                comment.getLikeCount() + likeService.getLikeCountInRedis(entries, comment.getId(), TargetType.OPINION_COMMENT)
-            ))
-            .toList();
+                .map(comment -> CommentResponse.of(
+                        comment,
+                        s3Service.generatePresignedGetUrl(comment.getUser().getS3Key()),
+                        likedCommentIds.contains(comment.getId()),
+                        comment.getLikeCount() + likeService.getLikeCountInRedis(entries, comment.getId(), TargetType.OPINION_COMMENT)
+                ))
+                .toList();
 
         String profileUrl = s3Service.generatePresignedGetUrl(opinion.getUser().getS3Key());
 
@@ -107,12 +107,12 @@ public class OpinionFacadeService {
         Set<Object> entries = batchRedisTemplate.opsForSet().members("like:batch");
 
         List<MyOpinionDto> opinionDtos = opinions.stream()
-            .map(opinion -> {
-                boolean isLiked = likedOpinionIds.contains(opinion.getId());
-                int likeCount = opinion.getLikeCount() + likeService.getLikeCountInRedis(entries, opinion.getId(), TargetType.OPINION);
-                return MyOpinionDto.from(opinion, isLiked, likeCount);
-            })
-            .toList();
+                .map(opinion -> {
+                    boolean isLiked = likedOpinionIds.contains(opinion.getId());
+                    int likeCount = opinion.getLikeCount() + likeService.getLikeCountInRedis(entries, opinion.getId(), TargetType.OPINION);
+                    return MyOpinionDto.from(opinion, isLiked, likeCount);
+                })
+                .toList();
 
         return MyOpinionResponse.of(opinionDtos, newNextCursorId);
     }

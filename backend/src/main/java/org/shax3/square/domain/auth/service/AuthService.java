@@ -3,10 +3,10 @@ package org.shax3.square.domain.auth.service;
 import com.google.firebase.auth.FirebaseToken;
 import lombok.RequiredArgsConstructor;
 import org.shax3.square.domain.auth.TokenUtil;
-import org.shax3.square.domain.auth.dto.request.FirebaseLoginRequest;
-import org.shax3.square.domain.auth.model.RefreshToken;
 import org.shax3.square.domain.auth.dto.UserLoginDto;
 import org.shax3.square.domain.auth.dto.UserTokenDto;
+import org.shax3.square.domain.auth.dto.request.FirebaseLoginRequest;
+import org.shax3.square.domain.auth.model.RefreshToken;
 import org.shax3.square.domain.auth.repository.RefreshTokenRepository;
 import org.shax3.square.domain.user.model.SocialType;
 import org.shax3.square.domain.user.model.User;
@@ -105,7 +105,7 @@ public class AuthService {
         throw new CustomException(INVALID_REQUEST);
     }
 
-    private void checkSocialType (SocialType userSocialType, SocialType loginType) {
+    private void checkSocialType(SocialType userSocialType, SocialType loginType) {
         if (userSocialType == loginType) {
             return;
         }

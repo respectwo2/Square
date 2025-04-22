@@ -3,11 +3,7 @@ package org.shax3.square.domain.auth.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import okhttp3.*;
 import org.shax3.square.exception.CustomException;
 import org.shax3.square.exception.ExceptionCode;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,7 +67,7 @@ public class GoogleAuthService {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(userInfo);
             email = jsonNode.get("email").asText();
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new CustomException((ExceptionCode.UNABLE_TO_GET_USER_INFO));
         }
 

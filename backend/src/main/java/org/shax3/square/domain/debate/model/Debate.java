@@ -23,13 +23,13 @@ public class Debate {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(name ="is_valid",nullable = false)
+    @Column(name = "is_valid", nullable = false)
     private boolean valid;
 
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String leftOption;
 
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String rightOption;
 
     @Builder

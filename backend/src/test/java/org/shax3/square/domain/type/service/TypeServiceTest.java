@@ -1,18 +1,5 @@
 package org.shax3.square.domain.type.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.shax3.square.exception.ExceptionCode.TYPE_RESULT_NOT_FOUND;
-import static org.shax3.square.exception.ExceptionCode.USER_TYPE_NOT_FOUND;
-
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +19,19 @@ import org.shax3.square.domain.user.model.Type;
 import org.shax3.square.domain.user.model.User;
 import org.shax3.square.domain.user.service.UserService;
 import org.shax3.square.exception.CustomException;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.shax3.square.exception.ExceptionCode.TYPE_RESULT_NOT_FOUND;
+import static org.shax3.square.exception.ExceptionCode.USER_TYPE_NOT_FOUND;
 
 @ExtendWith(MockitoExtension.class)
 public class TypeServiceTest {

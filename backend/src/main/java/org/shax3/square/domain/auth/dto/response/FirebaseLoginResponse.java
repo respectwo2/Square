@@ -27,6 +27,7 @@ public record FirebaseLoginResponse(
                 .refreshToken(dto.refreshToken().getToken())
                 .build();
     }
+
     //가입해야한다면 이메일이 필요함
     public static FirebaseLoginResponse notMember(String email, SocialType socialType) {
         return FirebaseLoginResponse.builder()

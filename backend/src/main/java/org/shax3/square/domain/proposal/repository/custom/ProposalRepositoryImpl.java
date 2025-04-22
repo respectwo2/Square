@@ -8,6 +8,7 @@ import org.shax3.square.domain.proposal.model.QProposal;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class ProposalRepositoryImpl implements ProposalRepositoryCustom {

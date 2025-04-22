@@ -1,25 +1,19 @@
 package org.shax3.square.domain.user.model;
 
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-import static org.shax3.square.domain.user.model.State.*;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-
-import org.shax3.square.common.entity.BaseTimeEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.shax3.square.common.entity.BaseTimeEntity;
 import org.shax3.square.domain.user.dto.request.UpdateProfileRequest;
+
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
+import static org.shax3.square.domain.user.model.State.ACTIVE;
+import static org.shax3.square.domain.user.model.State.LEAVE;
 
 @Entity
 @Getter

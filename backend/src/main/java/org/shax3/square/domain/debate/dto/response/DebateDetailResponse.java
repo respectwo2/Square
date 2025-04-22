@@ -1,6 +1,5 @@
 package org.shax3.square.domain.debate.dto.response;
 
-import org.shax3.square.domain.debate.model.Debate;
 import org.shax3.square.domain.opinion.dto.OpinionDto;
 
 import java.util.List;

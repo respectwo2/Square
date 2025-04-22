@@ -26,7 +26,7 @@ public class Proposal {
     @Column(name = "like_count", nullable = false)
     private int likeCount;
 
-    @Column(name ="is_valid",nullable = false)
+    @Column(name = "is_valid", nullable = false)
     private boolean valid;
 
     @Builder
@@ -36,6 +36,7 @@ public class Proposal {
         this.likeCount = 0;
         this.valid = true;
     }
+
     public void softDelete() {
         this.valid = false;
     }

@@ -36,6 +36,7 @@ public class OpinionRepositoryImpl implements OpinionRepositoryCustom {
                 .limit(limit)
                 .fetch();
     }
+
     @Override
     public List<Opinion> findOpinionsByLatest(Long debateId, boolean isLeft, Long nextCursorId, int limit) {
         QOpinion op = QOpinion.opinion;

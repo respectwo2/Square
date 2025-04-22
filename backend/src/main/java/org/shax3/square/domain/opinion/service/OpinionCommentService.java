@@ -1,13 +1,11 @@
 package org.shax3.square.domain.opinion.service;
 
 import lombok.RequiredArgsConstructor;
-
 import org.shax3.square.domain.opinion.dto.request.CreateOpinionCommentRequest;
 import org.shax3.square.domain.opinion.dto.request.UpdateOpinionRequest;
 import org.shax3.square.domain.opinion.model.Opinion;
 import org.shax3.square.domain.opinion.model.OpinionComment;
 import org.shax3.square.domain.opinion.repository.OpinionCommentRepository;
-import org.shax3.square.domain.s3.service.S3Service;
 import org.shax3.square.domain.user.model.User;
 import org.shax3.square.exception.CustomException;
 import org.shax3.square.exception.ExceptionCode;
@@ -65,7 +63,7 @@ public class OpinionCommentService {
 
     public OpinionComment getOpinionComment(Long opinionCommentId) {
         return opinionCommentRepository.findById(opinionCommentId)
-            .orElseThrow(() -> new CustomException(OPINION_COMMENT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(OPINION_COMMENT_NOT_FOUND));
     }
 
     public void validateExists(Long opinionCommentId) {
