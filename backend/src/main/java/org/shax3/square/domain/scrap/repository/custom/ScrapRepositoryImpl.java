@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.shax3.square.domain.scrap.model.QScrap.scrap;
-
 @Repository
 @RequiredArgsConstructor
 public class ScrapRepositoryImpl implements ScrapRepositoryCustom {

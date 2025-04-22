@@ -1,26 +1,19 @@
 package org.shax3.square.domain.proposal.service;
 
 import lombok.RequiredArgsConstructor;
-
-import org.shax3.square.common.model.TargetType;
-import org.shax3.square.domain.like.service.LikeService;
-import org.shax3.square.domain.post.model.Post;
-import org.shax3.square.domain.proposal.dto.ProposalDto;
 import org.shax3.square.domain.proposal.dto.request.CreateProposalRequest;
 import org.shax3.square.domain.proposal.dto.response.CreateProposalsResponse;
-import org.shax3.square.domain.proposal.dto.response.ProposalsResponse;
 import org.shax3.square.domain.proposal.model.Proposal;
 import org.shax3.square.domain.proposal.repository.ProposalRepository;
 import org.shax3.square.domain.user.model.User;
 import org.shax3.square.exception.CustomException;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
-import static org.shax3.square.exception.ExceptionCode.*;
+import static org.shax3.square.exception.ExceptionCode.ALREADY_DELETED;
+import static org.shax3.square.exception.ExceptionCode.PROPOSAL_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +47,7 @@ public class ProposalService {
 
     public Proposal getProposal(Long proposalId) {
         return proposalRepository.findById(proposalId)
-            .orElseThrow(() -> new CustomException(PROPOSAL_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(PROPOSAL_NOT_FOUND));
     }
 
     public void validateExists(Long proposalId) {

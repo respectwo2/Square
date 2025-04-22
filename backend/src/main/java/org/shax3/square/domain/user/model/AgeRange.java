@@ -1,8 +1,7 @@
 package org.shax3.square.domain.user.model;
 
-import org.shax3.square.common.model.DisplayableEnum;
-
 import com.fasterxml.jackson.annotation.JsonValue;
+import org.shax3.square.common.model.DisplayableEnum;
 
 
 public enum AgeRange implements DisplayableEnum {

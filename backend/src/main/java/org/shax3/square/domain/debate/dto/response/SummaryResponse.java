@@ -1,7 +1,6 @@
 package org.shax3.square.domain.debate.dto.response;
 
 import org.shax3.square.domain.debate.dto.SummaryDto;
-import org.shax3.square.domain.debate.model.Debate;
 
 import java.util.List;
 
@@ -11,8 +10,8 @@ public record SummaryResponse(
         List<SummaryDto> summaries
 ) {
     public static SummaryResponse of(
-                                     VoteResponse voteResponse,
-                                     List<SummaryDto> summaries) {
+            VoteResponse voteResponse,
+            List<SummaryDto> summaries) {
 
         Integer leftCount = (voteResponse != null) ? voteResponse.leftCount() : null;
         Integer rightCount = (voteResponse != null) ? voteResponse.rightCount() : null;

@@ -28,7 +28,7 @@ public class ProposalController {
     )
     @PostMapping
     public ResponseEntity<CreateProposalsResponse> createProposal(@Valid @RequestBody CreateProposalRequest request,
-                                                           @AuthUser User user) {
+                                                                  @AuthUser User user) {
         CreateProposalsResponse response = proposalService.save(request, user);
         return ResponseEntity.ok(response);
     }

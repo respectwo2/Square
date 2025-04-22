@@ -1,11 +1,7 @@
 package org.shax3.square.domain.notification.listener;
 
 import lombok.RequiredArgsConstructor;
-import org.shax3.square.domain.notification.event.DebateCommentCreatedEvent;
-import org.shax3.square.domain.notification.event.NoticePublishedEvent;
-import org.shax3.square.domain.notification.event.PostCommentCreatedEvent;
-import org.shax3.square.domain.notification.event.PostReplyCreatedEvent;
-import org.shax3.square.domain.notification.event.TodayDebateStartedEvent;
+import org.shax3.square.domain.notification.event.*;
 import org.shax3.square.domain.notification.model.NotificationType;
 import org.shax3.square.domain.notification.service.NotificationService;
 import org.springframework.context.event.EventListener;

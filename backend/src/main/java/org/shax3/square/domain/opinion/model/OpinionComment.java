@@ -44,11 +44,11 @@ public class OpinionComment extends BaseTimeEntity {
         this.valid = true;
     }
 
-    public void softDelete(){
+    public void softDelete() {
         valid = false;
     }
 
-    public void updateContent(String content){
+    public void updateContent(String content) {
         this.content = content;
     }
 

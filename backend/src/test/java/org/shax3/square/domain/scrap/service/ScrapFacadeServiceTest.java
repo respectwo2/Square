@@ -7,11 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.shax3.square.common.model.TargetType;
-import org.shax3.square.domain.debate.service.DebateService;
 import org.shax3.square.domain.scrap.dto.request.CreateScrapRequest;
 import org.shax3.square.domain.user.model.User;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

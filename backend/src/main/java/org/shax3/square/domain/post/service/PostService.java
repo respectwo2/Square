@@ -2,8 +2,6 @@ package org.shax3.square.domain.post.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import org.shax3.square.domain.opinion.model.OpinionComment;
 import org.shax3.square.domain.post.dto.request.CreatePostRequest;
 import org.shax3.square.domain.post.dto.request.UpdatePostRequest;
 import org.shax3.square.domain.post.model.Post;
@@ -68,7 +66,7 @@ public class PostService {
 
         verifyAuthor(user, post);
 
-        int currentCount  = post.getPostImages().size();
+        int currentCount = post.getPostImages().size();
         int newCount = currentCount - updatePostRequest.deletedImages().size() + updatePostRequest.addedImages().size();
         if (newCount > 3) {
             throw new CustomException(POST_IMAGE_LIMIT);

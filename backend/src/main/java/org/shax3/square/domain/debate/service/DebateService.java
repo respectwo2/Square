@@ -1,7 +1,6 @@
 package org.shax3.square.domain.debate.service;
 
 import lombok.RequiredArgsConstructor;
-
 import org.shax3.square.domain.debate.AiSummaryClient;
 import org.shax3.square.domain.debate.dto.DebateVotedResultResponse;
 import org.shax3.square.domain.debate.dto.SummaryDto;
@@ -12,7 +11,6 @@ import org.shax3.square.domain.debate.dto.response.SummaryResponse;
 import org.shax3.square.domain.debate.dto.response.VoteResponse;
 import org.shax3.square.domain.debate.model.Category;
 import org.shax3.square.domain.debate.model.Debate;
-import org.shax3.square.domain.debate.model.Summary;
 import org.shax3.square.domain.debate.model.Vote;
 import org.shax3.square.domain.debate.repository.DebateRepository;
 import org.shax3.square.domain.notification.event.TodayDebateStartedEvent;
@@ -166,6 +164,7 @@ public class DebateService {
 
     /**
      * 오늘의 논쟁 생성
+     *
      * @param request
      * @param user
      */
@@ -188,9 +187,9 @@ public class DebateService {
         List<User> users = userService.findAll();
         for (User receiver : users) {
             eventPublisher.publishEvent(new TodayDebateStartedEvent(
-                receiver,
-                debate.getTopic(),
-                debate.getId()
+                    receiver,
+                    debate.getTopic(),
+                    debate.getId()
             ));
         }
     }

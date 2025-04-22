@@ -3,8 +3,8 @@ package org.shax3.square.domain.opinion.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.shax3.square.domain.opinion.model.OpinionComment;
 import org.shax3.square.domain.opinion.model.Opinion;
+import org.shax3.square.domain.opinion.model.OpinionComment;
 import org.shax3.square.domain.user.model.User;
 
 public record CreateOpinionCommentRequest(
@@ -16,11 +16,11 @@ public record CreateOpinionCommentRequest(
         String content
 ) {
 
-        public OpinionComment to(Opinion opinion, User user){
-                return OpinionComment.builder()
-                        .opinion(opinion)
-                        .user(user)
-                        .content(content)
-                        .build();
-        }
+    public OpinionComment to(Opinion opinion, User user) {
+        return OpinionComment.builder()
+                .opinion(opinion)
+                .user(user)
+                .content(content)
+                .build();
+    }
 }

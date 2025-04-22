@@ -6,9 +6,9 @@ import java.util.List;
 
 @Builder
 public record UserChoiceResponse(
-    List<String> regions,
-    List<String> genders,
-    List<String> religions
+        List<String> regions,
+        List<String> genders,
+        List<String> religions
 ) {
     public static UserChoiceResponse of(List<String> regions, List<String> genders, List<String> religions) {
         return UserChoiceResponse.builder()

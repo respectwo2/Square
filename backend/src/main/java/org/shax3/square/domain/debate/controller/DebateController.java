@@ -139,7 +139,7 @@ public class DebateController {
     }
 
     @Operation(summary = "오늘의 논쟁 생성 API ",
-        description = "청원 목록 중 하나를 선택하여 오늘의 논쟁을 생성합니다."
+            description = "청원 목록 중 하나를 선택하여 오늘의 논쟁을 생성합니다."
     )
     @PostMapping("/today")
     public ResponseEntity<Void> createDebate(@Valid @RequestBody DebateCreateRequest request, @AuthUser User user) {

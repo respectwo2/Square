@@ -75,10 +75,10 @@ public class GuestAuthenticationArgumentResolver implements HandlerMethodArgumen
         }
 
         return Arrays.stream(cookies)
-            .filter(cookie -> cookie.getName().equals("refresh-token"))
-            .findFirst()
-            .orElseThrow(() -> new CustomException(INVALID_REFRESH_TOKEN))
-            .getValue();
+                .filter(cookie -> cookie.getName().equals("refresh-token"))
+                .findFirst()
+                .orElseThrow(() -> new CustomException(INVALID_REFRESH_TOKEN))
+                .getValue();
     }
 
     private User extractUser(String accessToken) {

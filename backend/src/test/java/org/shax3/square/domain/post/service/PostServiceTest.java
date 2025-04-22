@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.shax3.square.domain.post.dto.request.CreatePostRequest;
 import org.shax3.square.domain.post.dto.request.UpdatePostRequest;
 import org.shax3.square.domain.post.model.Post;
@@ -12,16 +15,14 @@ import org.shax3.square.domain.post.repository.PostRepository;
 import org.shax3.square.domain.s3.service.S3Service;
 import org.shax3.square.domain.user.model.User;
 import org.shax3.square.exception.CustomException;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 import static org.shax3.square.exception.ExceptionCode.*;
 

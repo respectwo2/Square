@@ -3,9 +3,9 @@ package org.shax3.square.domain.auth.dto;
 import lombok.Builder;
 import org.shax3.square.domain.auth.model.RefreshToken;
 import org.shax3.square.domain.user.model.SocialType;
+import org.shax3.square.domain.user.model.State;
 import org.shax3.square.domain.user.model.Type;
 import org.shax3.square.domain.user.model.User;
-import org.shax3.square.domain.user.model.State;
 
 @Builder
 public record UserLoginDto(

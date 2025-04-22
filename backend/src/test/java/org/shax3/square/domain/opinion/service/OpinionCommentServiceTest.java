@@ -11,7 +11,6 @@ import org.shax3.square.domain.opinion.dto.request.UpdateOpinionRequest;
 import org.shax3.square.domain.opinion.model.Opinion;
 import org.shax3.square.domain.opinion.model.OpinionComment;
 import org.shax3.square.domain.opinion.repository.OpinionCommentRepository;
-import org.shax3.square.domain.s3.service.S3Service;
 import org.shax3.square.domain.user.model.Type;
 import org.shax3.square.domain.user.model.User;
 import org.shax3.square.exception.CustomException;
@@ -96,7 +95,6 @@ class OpinionCommentServiceTest {
     }
 
 
-
     @Test
     @DisplayName("답글 삭제 성공 테스트 - Soft Delete")
     void deleteOpinionComment_success() {
@@ -162,6 +160,7 @@ class OpinionCommentServiceTest {
         assertThat(mockComment.getContent()).isEqualTo("Updated Content");
         verify(opinionCommentRepository, times(1)).findById(1L);
     }
+
     @Test
     @DisplayName("답글 업데이트 실패 테스트 - 댓글이 존재하지 않을 경우")
     void updateOpinionComment_notFound() {
@@ -209,7 +208,7 @@ class OpinionCommentServiceTest {
 
         // when & then
         assertThatCode(() -> opinionCommentService.validateExists(opinionCommentId))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @Test
@@ -221,8 +220,8 @@ class OpinionCommentServiceTest {
 
         // when & then
         assertThatThrownBy(() -> opinionCommentService.validateExists(opinionCommentId))
-            .isInstanceOf(CustomException.class)
-            .hasMessage(ExceptionCode.OPINION_COMMENT_NOT_FOUND.getMessage());
+                .isInstanceOf(CustomException.class)
+                .hasMessage(ExceptionCode.OPINION_COMMENT_NOT_FOUND.getMessage());
     }
 
     @Test

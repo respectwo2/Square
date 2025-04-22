@@ -14,15 +14,7 @@ import org.shax3.square.domain.post.service.PostFacadeService;
 import org.shax3.square.domain.post.service.PostService;
 import org.shax3.square.domain.user.model.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/posts")
@@ -77,8 +69,8 @@ public class PostController {
     }
 
     @Operation(
-        summary = "게시글 목록 조회 api",
-        description = "게시글 목록을 조회합니다. (페이징 처리)"
+            summary = "게시글 목록 조회 api",
+            description = "게시글 목록을 조회합니다. (페이징 처리)"
     )
     @GetMapping
     public ResponseEntity<PostListResponse> getPosts(
@@ -94,13 +86,13 @@ public class PostController {
     }
 
     @Operation(
-        summary = "게시글 상세 조회 api",
-        description = "게시글 id로 게시글과 댓글 목록을 조회합니다. 댓글은 전부 불러오고, 대댓글만 페이징 처리합니다."
+            summary = "게시글 상세 조회 api",
+            description = "게시글 id로 게시글과 댓글 목록을 조회합니다. 댓글은 전부 불러오고, 대댓글만 페이징 처리합니다."
     )
     @GetMapping("/{postId}")
     public ResponseEntity<PostDetailResponse> getPostDetail(
-        @AuthUser User user,
-        @PathVariable Long postId
+            @AuthUser User user,
+            @PathVariable Long postId
     ) {
         PostDetailResponse response = postFacadeService.getPostDetail(user, postId);
 
@@ -108,14 +100,14 @@ public class PostController {
     }
 
     @Operation(
-        summary = "내가 작성한 게시글 목록 조회 api",
-        description = "내가 작성한 게시글 목록을 조회합니다. (페이징 처리)"
+            summary = "내가 작성한 게시글 목록 조회 api",
+            description = "내가 작성한 게시글 목록을 조회합니다. (페이징 처리)"
     )
     @GetMapping("/my")
     public ResponseEntity<MyPostResponse> getMyPosts(
-        @AuthUser User user,
-        @RequestParam(required = false) Long nextCursorId,
-        @RequestParam(defaultValue = "10") int limit
+            @AuthUser User user,
+            @RequestParam(required = false) Long nextCursorId,
+            @RequestParam(defaultValue = "10") int limit
     ) {
         MyPostResponse response = postFacadeService.getMyPostList(user, nextCursorId, limit);
 
@@ -123,14 +115,14 @@ public class PostController {
     }
 
     @Operation(
-        summary = "내가 좋아요한 게시글 목록 조회 api",
-        description = "내가 좋아요한 게시글 목록을 조회합니다. (페이징 처리)"
+            summary = "내가 좋아요한 게시글 목록 조회 api",
+            description = "내가 좋아요한 게시글 목록을 조회합니다. (페이징 처리)"
     )
     @GetMapping("/my-likes")
     public ResponseEntity<MyPostResponse> getMyLikedPosts(
-        @AuthUser User user,
-        @RequestParam(required = false) Long nextCursorId,
-        @RequestParam(defaultValue = "10") int limit
+            @AuthUser User user,
+            @RequestParam(required = false) Long nextCursorId,
+            @RequestParam(defaultValue = "10") int limit
     ) {
         MyPostResponse response = postFacadeService.getMyLikedPostList(user, nextCursorId, limit);
 
@@ -138,14 +130,14 @@ public class PostController {
     }
 
     @Operation(
-        summary = "내가 스크랩한 게시글 목록 조회 api",
-        description = "내가 스크랩한 게시글 목록을 조회합니다. (페이징 처리)"
+            summary = "내가 스크랩한 게시글 목록 조회 api",
+            description = "내가 스크랩한 게시글 목록을 조회합니다. (페이징 처리)"
     )
     @GetMapping("/my-scraps")
     public ResponseEntity<MyPostResponse> getMyScrapPosts(
-        @AuthUser User user,
-        @RequestParam(required = false) Long nextCursorId,
-        @RequestParam(defaultValue = "10") int limit
+            @AuthUser User user,
+            @RequestParam(required = false) Long nextCursorId,
+            @RequestParam(defaultValue = "10") int limit
     ) {
         MyPostResponse response = postFacadeService.getMyScrapPostList(user, nextCursorId, limit);
 

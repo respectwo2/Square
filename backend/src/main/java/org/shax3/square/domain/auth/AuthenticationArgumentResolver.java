@@ -73,17 +73,17 @@ public class AuthenticationArgumentResolver implements HandlerMethodArgumentReso
         }
 
         return Arrays.stream(cookies)
-            .filter(cookie -> cookie.getName().equals("refresh-token"))
-            .findFirst()
-            .orElseThrow(() -> new CustomException(INVALID_REFRESH_TOKEN))
-            .getValue();
+                .filter(cookie -> cookie.getName().equals("refresh-token"))
+                .findFirst()
+                .orElseThrow(() -> new CustomException(INVALID_REFRESH_TOKEN))
+                .getValue();
     }
 
     private User extractUser(String accessToken) {
         Long userId = Long.valueOf(tokenUtil.getSubject(accessToken));
 
         return userRepository.findById(userId)
-            .orElseThrow(() -> new CustomException(INVALID_REQUEST));
+                .orElseThrow(() -> new CustomException(INVALID_REQUEST));
     }
 
     private void checkState(User user) {

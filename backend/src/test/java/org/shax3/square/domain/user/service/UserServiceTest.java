@@ -3,13 +3,13 @@ package org.shax3.square.domain.user.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.shax3.square.domain.auth.TokenUtil;
-import org.shax3.square.domain.auth.dto.UserTokenDto;
 import org.shax3.square.domain.auth.model.RefreshToken;
 import org.shax3.square.domain.auth.repository.RefreshTokenRepository;
 import org.shax3.square.domain.s3.service.S3Service;
-import org.shax3.square.domain.user.dto.UserSignUpDto;
 import org.shax3.square.domain.user.dto.request.CheckNicknameRequest;
 import org.shax3.square.domain.user.dto.request.SignUpRequest;
 import org.shax3.square.domain.user.dto.request.UpdateProfileRequest;
@@ -23,7 +23,8 @@ import org.shax3.square.exception.CustomException;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;

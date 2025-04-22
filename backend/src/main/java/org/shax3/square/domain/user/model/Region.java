@@ -1,8 +1,7 @@
 package org.shax3.square.domain.user.model;
 
-import org.shax3.square.common.model.DisplayableEnum;
-
 import com.fasterxml.jackson.annotation.JsonValue;
+import org.shax3.square.common.model.DisplayableEnum;
 
 public enum Region implements DisplayableEnum {
     SEOUL("서울특별시"),
@@ -28,6 +27,7 @@ public enum Region implements DisplayableEnum {
     Region(String koreanName) {
         this.koreanName = koreanName;
     }
+
     @Override
     @JsonValue
     public String getKoreanName() {

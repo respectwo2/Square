@@ -33,18 +33,18 @@ public class SummaryService {
         List<Summary> summaries = new ArrayList<>();
 
         leftSummaries.forEach(content ->
-            summaries.add(Summary.builder()
-                .debate(debate)
-                .left(true)
-                .content(content)
-                .build()));
+                summaries.add(Summary.builder()
+                        .debate(debate)
+                        .left(true)
+                        .content(content)
+                        .build()));
 
         rightSummaries.forEach(content ->
-            summaries.add(Summary.builder()
-                .debate(debate)
-                .left(false)
-                .content(content)
-                .build()));
+                summaries.add(Summary.builder()
+                        .debate(debate)
+                        .left(false)
+                        .content(content)
+                        .build()));
 
         summaryRepository.saveAll(summaries);
     }

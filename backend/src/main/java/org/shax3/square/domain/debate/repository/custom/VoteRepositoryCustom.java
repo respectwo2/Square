@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface VoteRepositoryCustom {
     List<Vote> findByUserOrderByIdDesc(User user, Long nextCursorId, int limit);
+
     List<Vote> findByUserAndDebateIds(User user, List<Long> debateIds);
 }
 

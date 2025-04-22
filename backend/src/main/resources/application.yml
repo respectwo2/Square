@@ -27,9 +27,9 @@ spring:
 
   data:
 
-#    mongodb:
-#      database: ${MONGODB_DATABASE}
-#      uri: ${MONGODB_URI}
+  #    mongodb:
+  #      database: ${MONGODB_DATABASE}
+  #      uri: ${MONGODB_URI}
 
   cache:
     redis:

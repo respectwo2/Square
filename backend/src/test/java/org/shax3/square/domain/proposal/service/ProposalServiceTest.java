@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.shax3.square.domain.proposal.dto.request.CreateProposalRequest;
 import org.shax3.square.domain.proposal.dto.response.CreateProposalsResponse;
-import org.shax3.square.domain.proposal.dto.response.ProposalsResponse;
 import org.shax3.square.domain.proposal.model.Proposal;
 import org.shax3.square.domain.proposal.repository.ProposalRepository;
 import org.shax3.square.domain.user.model.User;
@@ -84,7 +83,6 @@ class ProposalServiceTest {
     }
 
 
-
     @Test
     @DisplayName("소프트 딜리트 테스트 - 한번만 호출되는지 검증")
     void softDeleteProposal() {
@@ -112,7 +110,7 @@ class ProposalServiceTest {
 
         // when & then
         assertThatCode(() -> proposalService.validateExists(proposalId))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @Test
@@ -124,8 +122,8 @@ class ProposalServiceTest {
 
         // when & then
         assertThatThrownBy(() -> proposalService.validateExists(proposalId))
-            .isInstanceOf(CustomException.class)
-            .hasMessage(ExceptionCode.PROPOSAL_NOT_FOUND.getMessage());
+                .isInstanceOf(CustomException.class)
+                .hasMessage(ExceptionCode.PROPOSAL_NOT_FOUND.getMessage());
     }
 
 
@@ -155,8 +153,8 @@ class ProposalServiceTest {
 
         // when & then
         assertThatThrownBy(() -> proposalService.getProposal(10L))
-            .isInstanceOf(CustomException.class)
-            .hasMessage(ExceptionCode.PROPOSAL_NOT_FOUND.getMessage());
+                .isInstanceOf(CustomException.class)
+                .hasMessage(ExceptionCode.PROPOSAL_NOT_FOUND.getMessage());
     }
 
 

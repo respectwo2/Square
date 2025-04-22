@@ -8,4 +8,5 @@ public record FirebaseLoginRequest(
         String deviceId,
         String deviceType,
         SocialType socialType
-) {}
+) {
+}

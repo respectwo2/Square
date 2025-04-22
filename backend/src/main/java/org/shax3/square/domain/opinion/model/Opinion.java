@@ -53,7 +53,7 @@ public class Opinion extends BaseTimeEntity {
         this.commentCount = 0;
     }
 
-    public void updateContent(String content){
+    public void updateContent(String content) {
         this.content = content;
     }
 

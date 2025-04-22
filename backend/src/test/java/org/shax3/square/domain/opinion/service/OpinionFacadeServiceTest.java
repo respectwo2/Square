@@ -11,7 +11,6 @@ import org.shax3.square.common.model.TargetType;
 import org.shax3.square.domain.debate.model.Debate;
 import org.shax3.square.domain.like.service.LikeService;
 import org.shax3.square.domain.opinion.dto.request.CreateOpinionCommentRequest;
-import org.shax3.square.domain.opinion.dto.response.CommentResponse;
 import org.shax3.square.domain.opinion.dto.response.CreateOpinionCommentResponse;
 import org.shax3.square.domain.opinion.dto.response.MyOpinionResponse;
 import org.shax3.square.domain.opinion.dto.response.OpinionDetailsResponse;
@@ -79,8 +78,8 @@ class OpinionFacadeServiceTest {
 
 
         mockDebate = Debate.builder()
-            .topic("Sample Debate")
-            .build();
+                .topic("Sample Debate")
+                .build();
         ReflectionTestUtils.setField(mockDebate, "id", 1L);
 
     }
@@ -143,11 +142,11 @@ class OpinionFacadeServiceTest {
 
         // opinion에 대해 유저가 좋아요 누른 상태
         when(likeService.getLikedTargetIds(mockUser, TargetType.OPINION, List.of(1L)))
-            .thenReturn(Set.of(1L));
+                .thenReturn(Set.of(1L));
 
         // comment에 대해 좋아요 누른 상태
         when(likeService.getLikedTargetIds(mockUser, TargetType.OPINION_COMMENT, List.of(1L)))
-            .thenReturn(Set.of(1L));
+                .thenReturn(Set.of(1L));
 
         OpinionDetailsResponse response = opinionFacadeService.getOpinionDetails(mockUser, 1L);
 
@@ -200,7 +199,7 @@ class OpinionFacadeServiceTest {
 
         when(opinionService.getMyOpinions(mockUser, nextCursorId, limit)).thenReturn(opinions);
         when(likeService.getLikedTargetIds(eq(mockUser), eq(TargetType.OPINION), anyList()))
-            .thenReturn(Set.of(4L));
+                .thenReturn(Set.of(4L));
 
         when(batchRedisTemplate.opsForSet()).thenReturn(setOperations);
         when(setOperations.members("like:batch")).thenReturn(Set.of());
@@ -300,10 +299,10 @@ class OpinionFacadeServiceTest {
 
         for (Long id : ids) {
             Opinion opinion = Opinion.builder()
-                .user(mockUser)
-                .debate(mockDebate)
-                .content("테스트 내용 " + id)
-                .build();
+                    .user(mockUser)
+                    .debate(mockDebate)
+                    .content("테스트 내용 " + id)
+                    .build();
             ReflectionTestUtils.setField(opinion, "id", id);
             ReflectionTestUtils.setField(opinion, "valid", true);
             opinions.add(opinion);

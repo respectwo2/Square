@@ -4,7 +4,7 @@ public record PresignedPutUrlResponse(
         String presignedPutUrl,
         String s3Key
 ) {
-     public static PresignedPutUrlResponse of(String presignedPutUrl,String s3Key) {
-         return new PresignedPutUrlResponse(presignedPutUrl, s3Key);
-     }
+    public static PresignedPutUrlResponse of(String presignedPutUrl, String s3Key) {
+        return new PresignedPutUrlResponse(presignedPutUrl, s3Key);
+    }
 }

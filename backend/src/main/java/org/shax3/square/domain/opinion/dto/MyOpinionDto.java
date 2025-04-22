@@ -10,7 +10,7 @@ public record MyOpinionDto(
         boolean isLiked
 ) {
 
-    public static MyOpinionDto from(Opinion opinion,boolean isLiked, int likeCount) {
+    public static MyOpinionDto from(Opinion opinion, boolean isLiked, int likeCount) {
         if (opinion == null) {
             return null;
         }

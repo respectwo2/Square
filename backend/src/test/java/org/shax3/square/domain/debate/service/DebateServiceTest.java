@@ -1,27 +1,24 @@
 package org.shax3.square.domain.debate.service;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.shax3.square.common.model.TargetType;
 import org.shax3.square.domain.debate.dto.SummaryDto;
-import org.shax3.square.domain.debate.dto.request.VoteRequest;
 import org.shax3.square.domain.debate.dto.response.SummaryResponse;
 import org.shax3.square.domain.debate.dto.response.VoteResponse;
 import org.shax3.square.domain.debate.model.Debate;
-import org.shax3.square.domain.debate.model.Vote;
 import org.shax3.square.domain.debate.repository.DebateRepository;
-import org.shax3.square.domain.scrap.service.ScrapFacadeService;
 import org.shax3.square.domain.user.model.User;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class DebateServiceTest {
 

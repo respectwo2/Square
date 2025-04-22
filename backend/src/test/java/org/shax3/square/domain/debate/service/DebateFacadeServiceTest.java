@@ -1,6 +1,5 @@
 package org.shax3.square.domain.debate.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +13,6 @@ import org.shax3.square.domain.debate.dto.response.VoteResponse;
 import org.shax3.square.domain.debate.model.Debate;
 import org.shax3.square.domain.debate.model.Vote;
 import org.shax3.square.domain.scrap.model.Scrap;
-import org.shax3.square.domain.scrap.service.ScrapFacadeService;
 import org.shax3.square.domain.scrap.service.ScrapService;
 import org.shax3.square.domain.user.model.User;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,7 +21,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class DebateFacadeServiceTest {
 
@@ -46,7 +45,7 @@ class DebateFacadeServiceTest {
         Scrap scrap = Scrap.builder().targetId(1L).build();
         ReflectionTestUtils.setField(scrap, "id", 10L);
 
-        when(scrapService.getPaginatedScraps(user, TargetType.DEBATE,null, 3))
+        when(scrapService.getPaginatedScraps(user, TargetType.DEBATE, null, 3))
                 .thenReturn(List.of(scrap));
         when(debateService.findDebateById(1L)).thenReturn(debate);
         when(voteService.getVoteByUserAndDebate(user, debate)).thenReturn(Optional.of(vote));
