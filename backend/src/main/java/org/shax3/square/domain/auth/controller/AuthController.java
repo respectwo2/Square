@@ -36,6 +36,12 @@ public class AuthController {
     @Value("${oauth2.google.client-id}")
     private String googleClientId;
 
+    @Value("${KAKAO_REDIRECT_URI}")
+    private String kakaoRedirectUri;
+
+    @Value("${KAKAO_CLIENT_ID")
+    private String kakaoClientId;
+
     private final AuthService authService;
     private final TokenUtil tokenUtil;
     private final UserDeviceService userDeviceService;
@@ -51,52 +57,11 @@ public class AuthController {
     ) {
         UserLoginDto userLoginDto = authService.loginTest("test@test.com");
 
-        Cookie cookie = new Cookie("refresh-token", userLoginDto.refreshToken().getToken());
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        setCookie(response, "refresh-token", userLoginDto.refreshToken().getToken());
 
         return ResponseEntity.ok().body(TestUserInfoResponse.from(userLoginDto, userLoginDto.accessToken(), userLoginDto.refreshToken().getToken()));
     }
 
-//    @Operation(
-//            summary = "임시 로그인 API2",
-//            description = "email을 입력하면 Access Token과 Refresh Token을 반환합니다."
-//    )
-//    @GetMapping("/test2")
-//    public ResponseEntity<TestUserInfoResponse> loginTest2(
-//            HttpServletResponse response
-//    ) {
-//        UserLoginDto userLoginDto = authService.loginTest("test2@test.com");
-//
-//        Cookie cookie = new Cookie("refresh-token", userLoginDto.refreshToken().getToken());
-//        cookie.setHttpOnly(true);
-//        cookie.setSecure(false);
-//        cookie.setPath("/");
-//        response.addCookie(cookie);
-//
-//        return ResponseEntity.ok().body(TestUserInfoResponse.from(userLoginDto, userLoginDto.accessToken(), userLoginDto.refreshToken().getToken()));
-//    }
-//
-//    @Operation(
-//            summary = "임시 로그인 API3",
-//            description = "email을 입력하면 Access Token과 Refresh Token을 반환합니다."
-//    )
-//    @GetMapping("/test3")
-//    public ResponseEntity<TestUserInfoResponse> loginTest3(
-//            HttpServletResponse response
-//    ) {
-//        UserLoginDto userLoginDto = authService.loginTest("test3@test.com");
-//
-//        Cookie cookie = new Cookie("refresh-token", userLoginDto.refreshToken().getToken());
-//        cookie.setHttpOnly(true);
-//        cookie.setSecure(false);
-//        cookie.setPath("/");
-//        response.addCookie(cookie);
-//
-//        return ResponseEntity.ok().body(TestUserInfoResponse.from(userLoginDto, userLoginDto.accessToken(), userLoginDto.refreshToken().getToken()));
-//    }
 
     @Operation(
             summary = "구글 로그인 API",
@@ -116,108 +81,87 @@ public class AuthController {
     }
 
     @GetMapping("/callback/google")
-    public ResponseEntity<UserInfoResponse> redirectGoogle(
-            @RequestParam("code") String code,
-            HttpServletResponse response
-    ) {
-        UserLoginDto userLoginDto = authService.googleLogin(code);
-
-        if (userLoginDto.refreshToken() != null) {
-            Cookie cookie = new Cookie("refresh-token", userLoginDto.refreshToken().getToken());
-            cookie.setHttpOnly(true);
-            cookie.setSecure(false);
-            cookie.setPath("/");
-            response.addCookie(cookie);
-            response.setHeader("Authorization", "Bearer " + userLoginDto.accessToken());
-
-            return ResponseEntity.ok().body(UserInfoResponse.from(userLoginDto));
-        }
-
-        String email = userLoginDto.email();
-        String signUpToken = tokenUtil.createSignUpToken(email, "GOOGLE");
-
-        Cookie cookie = new Cookie("sign-up-token", signUpToken);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        return ResponseEntity.ok().body(UserInfoResponse.from(userLoginDto));
+    public ResponseEntity<UserInfoResponse> redirectGoogle(@RequestParam("code") String code, HttpServletResponse response) {
+        return handleSocialCallback(authService.googleLogin(code), "GOOGLE", response);
     }
 
-    @Operation(
-            summary = "엑세스 토큰 재발급 api",
-            description = "엑세스 토큰을 재발급해 header에 넣어줍니다."
-    )
+    @GetMapping("/kakao")
+    public void loginWithKakao(HttpServletResponse response) throws IOException {
+        String kakaoAuthUrl = "https://kauth.kakao.com/oauth/authorize"
+                + "?client_id=" + kakaoClientId
+                + "&redirect_uri=" + kakaoRedirectUri
+                + "&response_type=code";
+        response.sendRedirect(kakaoAuthUrl);
+    }
+
+    @GetMapping("/callback/kakao")
+    public ResponseEntity<UserInfoResponse> redirectKakao(@RequestParam("code") String code, HttpServletResponse response) {
+        return handleSocialCallback(authService.kakaoLogin(code), "KAKAO", response);
+    }
+
+    private ResponseEntity<UserInfoResponse> handleSocialCallback(UserLoginDto userLoginDto, String socialType, HttpServletResponse response) {
+        UserInfoResponse userInfo = UserInfoResponse.from(userLoginDto);
+
+        if (userLoginDto.refreshToken() != null) {
+            setCookie(response, "refresh-token", userLoginDto.refreshToken().getToken());
+            expireCookie(response, "sign-up-token");
+            response.setHeader("Authorization", "Bearer " + userLoginDto.accessToken());
+        } else {
+            String signUpToken = tokenUtil.createSignUpToken(userLoginDto.email(), socialType);
+            setCookie(response, "sign-up-token", signUpToken);
+            expireCookie(response, "refresh-token");
+        }
+
+        return ResponseEntity.ok(userInfo);
+    }
+
     @PostMapping("/reissue")
-    public ResponseEntity<Void> reissueToken(
-            @CookieValue("refresh-token") String refreshToken,
-            @RequestHeader("Authorization") String authHeader,
-            HttpServletResponse response
-    ) {
+    @Operation(summary = "엑세스 토큰 재발급 api", description = "엑세스 토큰을 재발급해 header에 넣어줍니다.")
+    public ResponseEntity<Void> reissueToken(@CookieValue("refresh-token") String refreshToken,
+                                             @RequestHeader("Authorization") String authHeader,
+                                             HttpServletResponse response) {
         UserTokenDto tokenDto = authService.reissueTokens(refreshToken, authHeader);
-
         response.setHeader("Authorization", "Bearer " + tokenDto.accessToken());
-
-        Cookie cookie = new Cookie("refresh-token", tokenDto.refreshToken().getToken());
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-
+        setCookie(response, "refresh-token", tokenDto.refreshToken().getToken());
         return ResponseEntity.ok().build();
     }
 
-    @Operation(
-            summary = "로그아웃 api",
-            description = "쿠키를 지워주고 refreshToken을 만료시킵니다."
-    )
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(
-            @CookieValue("refresh-token") String refreshToken,
-            HttpServletResponse response
-    ) {
+    @Operation(summary = "로그아웃 api", description = "쿠키를 지워주고 refreshToken을 만료시킵니다.")
+    public ResponseEntity<Void> logout(@CookieValue("refresh-token") String refreshToken, HttpServletResponse response) {
         authService.logout(refreshToken);
-
-        Cookie cookie = new Cookie("refresh-token", null);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(0);
-
-        response.addCookie(cookie);
-
+        expireCookie(response, "refresh-token");
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/firebase")
-    public ResponseEntity<FirebaseLoginResponse> loginWithFirebase(
-            @RequestBody FirebaseLoginRequest request,
-            HttpServletResponse response
-    ) {
+    public ResponseEntity<FirebaseLoginResponse> loginWithFirebase(@RequestBody FirebaseLoginRequest request,
+                                                                   HttpServletResponse response) {
         FirebaseToken firebaseUser = firebaseService.verifyIdToken(request.idToken());
         UserLoginDto userLoginDto = authService.firebaseLogin(firebaseUser, request);
+
         if (userLoginDto.isMember()) {
-
-            Cookie cookie = new Cookie("refresh-token", userLoginDto.refreshToken().getToken());
-            cookie.setHttpOnly(true);
-            cookie.setSecure(false);
-            cookie.setPath("/");
-            response.addCookie(cookie);
-
-            userDeviceService.registerOrUpdateDevice(
-                    userLoginDto.userId(),
-                    request.fcmToken(),
-                    request.deviceId(),
-                    request.deviceType()
-            );
-
+            setCookie(response, "refresh-token", userLoginDto.refreshToken().getToken());
+            userDeviceService.registerOrUpdateDevice(userLoginDto.userId(), request.fcmToken(), request.deviceId(), request.deviceType());
             return ResponseEntity.ok(FirebaseLoginResponse.member(userLoginDto));
         }
-
 
         return ResponseEntity.ok(FirebaseLoginResponse.notMember(userLoginDto.email(), userLoginDto.socialType()));
     }
 
+    private void setCookie(HttpServletResponse response, String name, String value) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+
+    private void expireCookie(HttpServletResponse response, String name) {
+        Cookie cookie = new Cookie(name, null);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
 
 }

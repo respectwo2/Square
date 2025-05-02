@@ -27,60 +27,52 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenUtil tokenUtil;
     private final GoogleAuthService googleAuthService;
+    private final KakaoAuthService kakaoAuthService;
 
 
     @Transactional
     public UserLoginDto loginTest(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-
-        if (user.isPresent()) {
-            User loginUser = user.get();
-
-            Long userId = loginUser.getId();
-            UserTokenDto userTokens = tokenUtil.createLoginToken(userId);
-            refreshTokenRepository.deleteByUserId(userId);
-            refreshTokenRepository.save(userTokens.refreshToken());
-
-            return UserLoginDto.createMemberLoginDto(userTokens, loginUser);
-        }
-
-        return UserLoginDto.createNotMemberLoginDto(email);
+        return handleSocialLogin(email, null);
     }
 
     @Transactional
     public UserLoginDto googleLogin(String code) {
-
         String email = googleAuthService.googleCallback(code);
+        return handleSocialLogin(email, SocialType.GOOGLE);
+    }
 
-        Optional<User> user = userRepository.findByEmail(email);
+    @Transactional
+    public UserLoginDto kakaoLogin(String code) {
+        String email = kakaoAuthService.kakakoCallback(code);
+        return handleSocialLogin(email, SocialType.KAKAO);
+    }
 
-        if (user.isPresent()) {
-            User loginUser = user.get();
-            checkSocialType(loginUser.getSocialType(), SocialType.GOOGLE);
+    private UserLoginDto handleSocialLogin(String email, SocialType expectedType) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
 
-            Long userId = loginUser.getId();
-            UserTokenDto userTokens = tokenUtil.createLoginToken(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (expectedType != null) {
+                checkSocialType(user.getSocialType(), expectedType);
+            }
+            Long userId = user.getId();
+            UserTokenDto tokens = tokenUtil.createLoginToken(userId);
             refreshTokenRepository.deleteByUserId(userId);
-            refreshTokenRepository.save(userTokens.refreshToken());
-
-            return UserLoginDto.createMemberLoginDto(userTokens, loginUser);
+            refreshTokenRepository.save(tokens.refreshToken());
+            return UserLoginDto.createMemberLoginDto(tokens, user);
         }
 
         return UserLoginDto.createNotMemberLoginDto(email);
     }
+
 
     @Transactional
     public UserTokenDto reissueTokens(String refreshToken, String authHeader) {
         String accessToken = authHeader.split(" ")[1];
 
         if (tokenUtil.isTokenValid(accessToken)) {
-            Long userId = Long.parseLong(tokenUtil.getSubject(accessToken));
-            RefreshToken existingRefreshToken = refreshTokenRepository.findByUserId(userId)
-                    .orElseThrow(() -> new CustomException(INVALID_REFRESH_TOKEN));
-
-            return new UserTokenDto(accessToken, existingRefreshToken);
+            return new UserTokenDto(accessToken, null);
         }
-
 
         Long userId = tokenUtil.isAccessTokenExpired(accessToken);
         if (userId != null) {

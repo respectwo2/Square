@@ -16,6 +16,7 @@ public class SwaggerConfig {
     public static final String JWT_SCHEME_NAME = "JWT";
     public static final String COOKIE_SCHEME_NAME = "refresh-token";
     public static final String BEARER_SCHEME = "Bearer";
+    public static final String SERVER_URL = "http://localhost:8080/api";
 
     @Bean
     public OpenAPI openAPI() {
@@ -31,7 +32,7 @@ public class SwaggerConfig {
                 .in(SecurityScheme.In.COOKIE);
 
         return new OpenAPI()
-                .servers(List.of(new Server().url("https://j12a307.p.ssafy.io/api")))
+                .servers(List.of(new Server().url(SERVER_URL)))
                 .components(new Components()
                         .addSecuritySchemes(JWT_SCHEME_NAME, jwtSecurityScheme))
                 .addSecurityItem(new SecurityRequirement()
