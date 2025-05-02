@@ -1,24 +1,6 @@
 version: '3.8'
 
 services:
-  mysql:
-    build:
-      context: ./devops/docker
-      dockerfile: master-mysql.Dockerfile
-    container_name: mysql-container
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${SERVICE_NAME}
-      MYSQL_USER: ${DB_MYSQL_ID}
-      MYSQL_PASSWORD: ${DB_MYSQL_PASSWORD}
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - app-network
-
   redis-cache:
     image: redis:7
     container_name: redis-cache-container
@@ -45,7 +27,6 @@ services:
 
 
 volumes:
-  mysql-data:
   redis-cache-data:
   redis-batch-data:
 

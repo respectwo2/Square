@@ -12,7 +12,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.InputStream;
 
-@Configuration
+//@Configuration
 public class FirebaseConfig {
 
     @Value("${firebase.config.path}")
