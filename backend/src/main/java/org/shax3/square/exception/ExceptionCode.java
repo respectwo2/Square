@@ -63,7 +63,10 @@ public enum ExceptionCode {
 
     INVALID_PARENT_COMMENT(12001, "유효하지 않은 부모 댓글입니다."),
 
-    NOTIFICATION_NOT_FOUND(13001, "해당 알림이 존재하지 않습니다.");
+    NOTIFICATION_NOT_FOUND(13001, "해당 알림이 존재하지 않습니다."),
+
+    TOO_MANY_REQUEST(14001,"너무 많은 요청입니다.");
+
     private final int code;
     private final String message;
 }

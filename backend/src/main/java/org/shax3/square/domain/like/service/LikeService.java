@@ -9,11 +9,14 @@ import org.shax3.square.domain.like.model.Like;
 import org.shax3.square.domain.like.repository.LikeRepository;
 import org.shax3.square.domain.user.model.User;
 import org.shax3.square.domain.user.service.UserService;
+import org.shax3.square.exception.CustomException;
+import org.shax3.square.exception.ExceptionCode;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +51,14 @@ public class LikeService {
      * Type:  Set
      */
     public void toggleLikeInRedis(User user, Long targetId, TargetType targetType) {
+
+        String lockKey = String.format("like:rate_limit:%d:%s:%d", user.getId(), targetType.name(), targetId);
+        Boolean isAllowed = batchRedisTemplate.opsForValue().setIfAbsent(lockKey, "1", 2, TimeUnit.SECONDS);
+
+        if (!Boolean.TRUE.equals(isAllowed)) {
+            throw new CustomException(ExceptionCode.TOO_MANY_REQUEST);
+        }
+
         String key = "like:batch";
         String value = targetType.name() + ":" + targetId + ":" + user.getId();
 
